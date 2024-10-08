@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getCities } from "./api";
+import DeleteCityButton from "./deleteCityButton";
 interface City {
   city_name: string;
   id: number;
@@ -25,7 +26,10 @@ const Cities = () => {
   return (
     <ul>
       {cities.map((city) => (
-        <li key={city.id}>{city.city_name}</li>
+        <li key={city.id}>{city.city_name}
+         <DeleteCityButton cityId={city.id} onSuccess={() => {}} />
+        </li>
+       
       ))}
     </ul>
   );
