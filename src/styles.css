@@ -1,0 +1,10 @@
+.delete-button::before {
+  content: "\D7";
+  color: red;
+  cursor: pointer;
+}
+
+.delete-button:disabled::before {
+  content:""
+  
+}
