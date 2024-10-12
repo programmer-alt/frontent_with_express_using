@@ -8,3 +8,11 @@
   content:""
   
 }
+li {
+  display: flex;
+  align-items: center;
+}
+.city-color:hover {
+  cursor: pointer;
+  color: blue;
+}
