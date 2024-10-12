@@ -62,7 +62,7 @@ const Cities: React.FC = () => {
     <ul>
       {cities.map((city) => (
         <li key={city.id}>
-          <span className="city-color" >{city.city_name}</span>
+          <CityItemMouse city={city} onColorChange={handleColorChange} />
           <DeleteCityButton
             cityId={city.id}
             onSuccess={handleDelete}

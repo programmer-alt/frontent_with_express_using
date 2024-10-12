@@ -3,7 +3,7 @@ import { City } from "./cities";
 import './styles.css'
 interface CityItemMouseProps {
   city: City;
-  onColorChange: (color: string) => void;
+  onColorChange: (city: string, color: string) => void;
 }
 
 const CityItemMouse: React.FC<CityItemMouseProps> = ({
@@ -11,11 +11,11 @@ const CityItemMouse: React.FC<CityItemMouseProps> = ({
   onColorChange,
 }) => {
   const handleMouseEnter = () => {
-    onColorChange(city.city_name);
+    onColorChange(city.city_name, '');
   };
 
   const handleMouseLeave = () => {
-    onColorChange("");
+    onColorChange(city.city_name,'');
   };
 
   return (
