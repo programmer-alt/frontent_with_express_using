@@ -1,5 +1,5 @@
 import React from "react";
-
+import './styles.css'
 
 interface DeleteCityButtonProps {
   cityId: number;
@@ -12,8 +12,8 @@ const DeleteCityButton: React.FC<DeleteCityButtonProps> = ({ cityId, onSuccess, 
   }
   
   return (
-    <button onClick={handleDeleteClick} disabled={isDeleting}>
-      {isDeleting ? "Удаление..." : "Удалить"}
+    <button onClick={handleDeleteClick} disabled={isDeleting} className="delete-button">
+      {isDeleting ? "Удаление..." : ""}
     </button>
   );
 };
