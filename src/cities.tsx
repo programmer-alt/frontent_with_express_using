@@ -1,12 +1,38 @@
 import React, { useState, useEffect } from "react";
-import { getCities } from "./api";
+import { apiUrl, getCities } from "./api";
 import DeleteCityButton from "./deleteCityButton";
+
 interface City {
   city_name: string;
   id: number;
 }
-const Cities = () => {
+
+const Cities: React.FC = () => { 
   const [cities, setCities] = useState<City[]>([]);
+  const [isDeleting, setDeleting] = useState<boolean>(false);
+
+  const handleDelete = async (id: number): Promise<void> => {
+    const successMessage = () => {
+      alert("Город успешно удален");
+    };
+    setDeleting(true);
+    try {
+      const response = await fetch(`${apiUrl}/cities/${id}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        successMessage();
+        setCities((prevCities) => prevCities.filter((city) => city.id !== id));
+      } else {
+        alert("Город не был удален");
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setDeleting(false);
+    }
+  };
+
   useEffect(() => {
     const fetchCities = async () => {
       try {
@@ -26,10 +52,14 @@ const Cities = () => {
   return (
     <ul>
       {cities.map((city) => (
-        <li key={city.id}>{city.city_name}
-         <DeleteCityButton cityId={city.id} onSuccess={() => {}} />
+        <li key={city.id}>
+          {city.city_name}
+          <DeleteCityButton
+            cityId={city.id}
+            onSuccess={handleDelete}
+            isDeleting={isDeleting}
+          />
         </li>
-       
       ))}
     </ul>
   );
