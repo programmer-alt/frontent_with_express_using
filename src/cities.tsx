@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { apiUrl, getCities } from "./api";
 import DeleteCityButton from "./deleteCityButton";
+import CityItemMouse from "./cityItemMouse";
+import "./styles.css";
 
-interface City {
+ export interface City {
   city_name: string;
   id: number;
 }
@@ -10,7 +12,14 @@ interface City {
 const Cities: React.FC = () => { 
   const [cities, setCities] = useState<City[]>([]);
   const [isDeleting, setDeleting] = useState<boolean>(false);
-
+  const [color, setColor] = useState<Record<string, string>>({})
+ 
+  const handleColorChange = (cityName: string, color: string) => {
+    setColor(prevColors => ({
+      ...prevColors,
+      [cityName]: color
+    }))
+  }
   const handleDelete = async (id: number): Promise<void> => {
     const successMessage = () => {
       alert("Город успешно удален");
@@ -53,7 +62,7 @@ const Cities: React.FC = () => {
     <ul>
       {cities.map((city) => (
         <li key={city.id}>
-          {city.city_name}
+          <span className="city-color" >{city.city_name}</span>
           <DeleteCityButton
             cityId={city.id}
             onSuccess={handleDelete}

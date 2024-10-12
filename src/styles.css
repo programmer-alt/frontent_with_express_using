@@ -8,3 +8,8 @@
   content:""
   
 }
+
+.city-color:hover {
+  cursor: pointer;
+  color: blue;
+}
