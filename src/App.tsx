@@ -7,7 +7,7 @@ function App() {
     <div>
       <h1> Список городов</h1>
        <Cities/>
-       <CityFormAdd/>
+       
       
     </div>
   );

@@ -3,6 +3,7 @@ import { apiUrl, getCities } from "./api";
 import DeleteCityButton from "./deleteCityButton";
 import CityItemMouse from "./cityItemMouse";
 import "./styles.css";
+import CityFormAdd from "./cityFormAdd";
 
 interface CityColors {
   [city_name: string]: string;
@@ -44,7 +45,9 @@ const Cities: React.FC = () => {
       setDeleting(false);
     }
   };
-
+ const handleAddCity = (newCity: City) => {
+  setCities((prevCities)=>[...prevCities, newCity])
+ }
   useEffect(() => {
     const fetchCities = async () => {
       try {
@@ -62,6 +65,7 @@ const Cities: React.FC = () => {
   }, []);
 
   return (
+    <div>
     <ul>
       {cities.map((city) => (
         <li key={city.id}>
@@ -74,6 +78,8 @@ const Cities: React.FC = () => {
         </li>
       ))}
     </ul>
+    <CityFormAdd onAddCity={handleAddCity} />
+    </div>
   );
 };
 

@@ -1,10 +1,14 @@
 import React, { useState } from "react";
-import { apiUrl } from "./api";
+import { apiUrl, getCities } from "./api";
 import { City } from "./cities";
 
-const CityFormAdd: React.FC = () => {
-  const [cityName, setCityName] = useState('');
+interface CityFormAddProps {
+  onAddCity: (city:City)=> void
+}
 
+const CityFormAdd: React.FC<CityFormAddProps> = ({onAddCity}) => {
+  const [cityName, setCityName] = useState('');
+  const [newCity, setNewCity] = useState<City | null>(null);
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
@@ -15,12 +19,14 @@ const CityFormAdd: React.FC = () => {
       });
       if (response.ok) {
         console.log(" Город добавлен успешно!");
-        setCityName(''); 
+        setCityName('');
+        const newCity = await response.json()
+        onAddCity(newCity)
       } else {
-        console.error("Error adding city:", response.status);
+        console.error(" Ошибка добавления города:", response.status);
       }
     } catch (error) {
-      console.error("Error adding city:", error);
+      console.error(" Ошибка:", error);
     }
   };
 
