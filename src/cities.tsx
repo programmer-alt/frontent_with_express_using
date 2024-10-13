@@ -4,6 +4,9 @@ import DeleteCityButton from "./deleteCityButton";
 import CityItemMouse from "./cityItemMouse";
 import "./styles.css";
 
+interface CityColors {
+  [city_name: string]: string;
+}
  export interface City {
   city_name: string;
   id: number;
@@ -12,10 +15,10 @@ import "./styles.css";
 const Cities: React.FC = () => { 
   const [cities, setCities] = useState<City[]>([]);
   const [isDeleting, setDeleting] = useState<boolean>(false);
-  const [color, setColor] = useState<Record<string, string>>({})
+  const [color, setCityColors] = useState<CityColors>({})
  
   const handleColorChange = (cityName: string, color: string) => {
-    setColor(prevColors => ({
+    setCityColors(prevColors => ({
       ...prevColors,
       [cityName]: color
     }))
