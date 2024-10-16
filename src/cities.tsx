@@ -4,6 +4,7 @@ import DeleteCityButton from "./deleteCityButton";
 import CityItemMouse from "./cityItemMouse";
 import "./styles.css";
 import CityFormAdd from "./cityFormAdd";
+import { v4 as uuidv4 } from 'uuid';
 
 interface CityColors {
   [city_name: string]: string;
@@ -16,8 +17,8 @@ interface CityColors {
 const Cities: React.FC = () => { 
   const [cities, setCities] = useState<City[]>([]);
   const [isDeleting, setDeleting] = useState<boolean>(false);
-  const [color, setCityColors] = useState<CityColors>({})
- 
+  const [color, setCityColors] = useState<CityColors>({});
+  const[keys, setKeys] = useState<{[key:number]:string}>({})
   const handleColorChange = (cityName: string, color: string) => {
     setCityColors(prevColors => ({
       ...prevColors,
@@ -46,7 +47,9 @@ const Cities: React.FC = () => {
     }
   };
  const handleAddCity = (newCity: City) => {
+ 
   setCities((prevCities)=>[...prevCities, newCity])
+  console.log('Добавлен город:', newCity);
  }
   useEffect(() => {
     const fetchCities = async () => {
@@ -63,22 +66,34 @@ const Cities: React.FC = () => {
     };
     fetchCities();
   }, []);
+  
+    
+  
+  useEffect(() => {
+    const newKeys: { [key: number]: string } = {};
+    cities.forEach((city) => {
+      newKeys[city.id] = uuidv4();
+    });
+    setKeys(newKeys);
+  }, []);
+  
 
   return (
     <div>
+      <CityFormAdd onAddCity={handleAddCity} />
     <ul>
       {cities.map((city) => (
-        <li key={city.id}>
+        <li key={keys[city.id]}>
           <CityItemMouse city={city} onColorChange={handleColorChange} />
           <DeleteCityButton
             cityId={city.id}
             onSuccess={handleDelete}
             isDeleting={isDeleting}
-          />
+         />
         </li>
       ))}
     </ul>
-    <CityFormAdd onAddCity={handleAddCity} />
+    
     </div>
   );
 };

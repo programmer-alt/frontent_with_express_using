@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { apiUrl, getCities } from "./api";
+import { apiUrl} from "./api";
 import { City } from "./cities";
 
 interface CityFormAddProps {
@@ -8,7 +8,7 @@ interface CityFormAddProps {
 
 const CityFormAdd: React.FC<CityFormAddProps> = ({onAddCity}) => {
   const [cityName, setCityName] = useState('');
-  const [newCity, setNewCity] = useState<City | null>(null);
+ 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
