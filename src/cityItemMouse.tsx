@@ -1,6 +1,7 @@
 import React from "react";
 import { City } from "./cities";
 import './styles.css'
+
 interface CityItemMouseProps {
   city: City;
   onColorChange: (city: string, color: string) => void;

@@ -49,6 +49,7 @@ const Cities: React.FC = () => {
  const handleAddCity = (newCity: City) => {
  
   setCities((prevCities)=>[...prevCities, newCity])
+  setKeys((prevKeys) => ({...prevKeys, [newCity.id]: uuidv4()}));
   console.log('Добавлен город:', newCity);
  }
   useEffect(() => {
@@ -83,7 +84,7 @@ const Cities: React.FC = () => {
       <CityFormAdd onAddCity={handleAddCity} />
     <ul>
       {cities.map((city) => (
-        <li key={keys[city.id]}>
+        <li key={`${city.id}-${city.city_name}`}>
           <CityItemMouse city={city} onColorChange={handleColorChange} />
           <DeleteCityButton
             cityId={city.id}
