@@ -19,9 +19,16 @@ const CityFormAdd: React.FC<CityFormAddProps> = ({onAddCity}) => {
       });
       if (response.ok) {
         console.log(" Город добавлен успешно!");
-        setCityName('');
-        const newCity = await response.json()
-        onAddCity(newCity)
+       
+        const result = await response.json()
+        // const formattedCity: City = {
+        //   city_name: cityName, // Используем введенное название города
+        //   id: result.id // Используем идентификатор из ответа
+        // };
+      
+        onAddCity(result);
+        
+        setCityName('')
       } else {
         console.error(" Ошибка добавления города:", response.status);
       }
