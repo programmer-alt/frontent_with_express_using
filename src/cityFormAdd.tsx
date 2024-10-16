@@ -21,12 +21,13 @@ const CityFormAdd: React.FC<CityFormAddProps> = ({onAddCity}) => {
         console.log(" Город добавлен успешно!");
        
         const result = await response.json()
-        // const formattedCity: City = {
-        //   city_name: cityName, // Используем введенное название города
-        //   id: result.id // Используем идентификатор из ответа
-        // };
+        console.log(' ответ от сервера', result)
+        const formattedCity: City = {
+          city_name: cityName, // Используем введенное название города
+          id: result.id 
+        };
       
-        onAddCity(result);
+        onAddCity(formattedCity);
         
         setCityName('')
       } else {

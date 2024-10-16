@@ -7,6 +7,7 @@ interface DeleteCityButtonProps {
   isDeleting: boolean
 }
 const DeleteCityButton: React.FC<DeleteCityButtonProps> = ({ cityId, onSuccess, isDeleting }) => {
+ 
   const handleDeleteClick = () => {
     onSuccess(cityId);
   }

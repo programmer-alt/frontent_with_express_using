@@ -18,7 +18,7 @@ const Cities: React.FC = () => {
   const [cities, setCities] = useState<City[]>([]);
   const [isDeleting, setDeleting] = useState<boolean>(false);
   const [color, setCityColors] = useState<CityColors>({});
-  const[keys, setKeys] = useState<{[key:number]:string}>({})
+ 
   const handleColorChange = (cityName: string, color: string) => {
     setCityColors(prevColors => ({
       ...prevColors,
@@ -26,6 +26,7 @@ const Cities: React.FC = () => {
     }))
   }
   const handleDelete = async (id: number): Promise<void> => {
+    
     const successMessage = () => {
       alert("Город успешно удален");
     };
@@ -49,7 +50,7 @@ const Cities: React.FC = () => {
  const handleAddCity = (newCity: City) => {
  
   setCities((prevCities)=>[...prevCities, newCity])
-  setKeys((prevKeys) => ({...prevKeys, [newCity.id]: uuidv4()}));
+  
   console.log('Добавлен город:', newCity);
  }
   useEffect(() => {
@@ -70,14 +71,7 @@ const Cities: React.FC = () => {
   
     
   
-  useEffect(() => {
-    const newKeys: { [key: number]: string } = {};
-    cities.forEach((city) => {
-      newKeys[city.id] = uuidv4();
-    });
-    setKeys(newKeys);
-  }, []);
-  
+
 
   return (
     <div>
