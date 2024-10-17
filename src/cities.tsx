@@ -3,24 +3,29 @@ import { apiUrl, getCities } from "./api";
 import DeleteCityButton from "./deleteCityButton";
 import CityItemMouse from "./cityItemMouse";
 import "./styles.css";
+import CityFormAdd from "./cityFormAdd";
 
- export interface City {
+interface CityColors {
+  [city_name: string]: string;
+}
+export interface City {
   city_name: string;
   id: number;
 }
 
-const Cities: React.FC = () => { 
+const Cities: React.FC = () => {
   const [cities, setCities] = useState<City[]>([]);
   const [isDeleting, setDeleting] = useState<boolean>(false);
-  const [color, setColor] = useState<Record<string, string>>({})
- 
+  const [color, setCityColors] = useState<CityColors>({});
+
   const handleColorChange = (cityName: string, color: string) => {
-    setColor(prevColors => ({
+    setCityColors((prevColors) => ({
       ...prevColors,
-      [cityName]: color
-    }))
-  }
+      [cityName]: color,
+    }));
+  };
   const handleDelete = async (id: number): Promise<void> => {
+    console.log(id, "id города при удалении");
     const successMessage = () => {
       alert("Город успешно удален");
     };
@@ -41,7 +46,10 @@ const Cities: React.FC = () => {
       setDeleting(false);
     }
   };
-
+  const handleAddCity = (newCity: City) => {
+    setCities((prevCities) => [...prevCities, newCity]);
+    console.log("Добавлен город:", newCity);
+  };
   useEffect(() => {
     const fetchCities = async () => {
       try {
@@ -59,18 +67,21 @@ const Cities: React.FC = () => {
   }, []);
 
   return (
-    <ul>
-      {cities.map((city) => (
-        <li key={city.id}>
-          <CityItemMouse city={city} onColorChange={handleColorChange} />
-          <DeleteCityButton
-            cityId={city.id}
-            onSuccess={handleDelete}
-            isDeleting={isDeleting}
-          />
-        </li>
-      ))}
-    </ul>
+    <div>
+      <CityFormAdd onAddCity={handleAddCity} />
+      <ul>
+        {cities.map((city) => (
+          <li key={`${city.id}-${city.city_name}`}>
+            <CityItemMouse city={city} onColorChange={handleColorChange} />
+            <DeleteCityButton
+              cityId={city.id}
+              onSuccess={handleDelete}
+              isDeleting={isDeleting}
+            />
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 
