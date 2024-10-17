@@ -1,13 +1,18 @@
 import React, { useState } from "react";
-import { apiUrl} from "./api";
+import { apiUrl, getCities } from "./api";
 import { City } from "./cities";
 
 interface CityFormAddProps {
-  onAddCity: (city:City)=> void
+  onAddCity: (city: City) => void
 }
-
-const CityFormAdd: React.FC<CityFormAddProps> = ({onAddCity}) => {
+ type  CityforId = {
+  id: number | undefined,
+  name: string
+ }
+ 
+const CityFormAdd: React.FC<CityFormAddProps> = ({ onAddCity }) => {
   const [cityName, setCityName] = useState('');
+ const [citiesId, setCitiesId] = useState<number | undefined >(undefined);
  
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -17,34 +22,33 @@ const CityFormAdd: React.FC<CityFormAddProps> = ({onAddCity}) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ city_name: cityName }),
       });
-      if (response.ok) {
-        console.log(" Город добавлен успешно!");
-       
-        const result = await response.json()
-        console.log(' ответ от сервера', result)
-        const formattedCity: City = {
-          city_name: cityName, // Используем введенное название города
-          id: result.id 
-        };
       
-        onAddCity(formattedCity);
-        
-        setCityName('')
-      } else {
-        console.error(" Ошибка добавления города:", response.status);
-      }
+      if (response.ok) {
+        const addedCity = await response.json();
+        const addNewCity: City = {
+          id: addedCity.id,
+          city_name: cityName
+        }
+        console.log('Возвращение id ',addedCity.id); // Проверьте, что ID возвращается
+        onAddCity(addNewCity);
+    } else {
+      console.error('Ошибка при добавлении города');
+  }
     } catch (error) {
-      console.error(" Ошибка:", error);
-    }
-  };
-
+      console.error(error)
+  } 
+}
+  
   return (
-    
-      <form onSubmit={handleSubmit}>
-        <input type="text" value={cityName} onChange={(event) => setCityName(event.target.value)} placeholder="Введите город" />
-        <button type="submit">Добавить</button>
-      </form>
-   
+    <form onSubmit={handleSubmit}>
+      <input 
+        type="text" 
+        value={cityName} 
+        onChange={(event) => setCityName(event.target.value)} 
+        placeholder="Введите город" 
+      />
+      <button type="submit">Добавить</button>
+    </form>
   );
 };
 

@@ -26,7 +26,7 @@ const Cities: React.FC = () => {
     }))
   }
   const handleDelete = async (id: number): Promise<void> => {
-    
+    console.log(id, 'id города при удалении')
     const successMessage = () => {
       alert("Город успешно удален");
     };
@@ -38,6 +38,7 @@ const Cities: React.FC = () => {
       if (response.ok) {
         successMessage();
         setCities((prevCities) => prevCities.filter((city) => city.id !== id));
+        
       } else {
         alert("Город не был удален");
       }
