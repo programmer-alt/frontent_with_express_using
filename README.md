@@ -37,6 +37,6 @@
 
 ## Разработчик
 
-Имя: Programmer-alt
-Email: modstils88@mail.ru
-GitHub: [ссылка на репозиторий]
+* **Имя:** Programmer-alt
+* **Email**: modstils88@mail.ru
+* **GitHub:** [ссылка на репозиторий](https://github.com/programmer-alt/frontent_with_express_using)
